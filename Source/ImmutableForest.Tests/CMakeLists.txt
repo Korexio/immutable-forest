@@ -20,8 +20,8 @@ if(ENABLE_COVERAGE)
     if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         message(FATAL_ERROR "ENABLE_COVERAGE requires GCC.")
     endif()
-    find_program("GCOVR" "gcovr" REQUIRED)
-    message(STATUS "Using '${GCOVR}'.")
+
+    include("${CMAKE_SOURCE_DIR}/CMake/gcovr.cmake")
 
     target_compile_options("${TARGET}" PRIVATE "--coverage")
     target_link_options("${TARGET}" PRIVATE "--coverage")
@@ -41,4 +41,5 @@ if(ENABLE_COVERAGE)
     set_tests_properties("${TARGET}.Coverage" PROPERTIES
         FIXTURES_CLEANUP "${TARGET}.Coverage"
         LABELS "Coverage")
+
 endif()

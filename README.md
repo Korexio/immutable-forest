@@ -53,6 +53,7 @@ Alternatively, run the script of the same name in [`Scripts`](Scripts/), e.g. [`
 * [CMake](https://cmake.org/)
 * [Google Test](https://google.github.io/googletest/)
 * [Google Benchmark](https://github.com/google/benchmark)
+* [gcovr](https://gcovr.com/)
 * [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html)
 * [EditorConfig](https://editorconfig.org/)
 * [Visual Studio Code](https://code.visualstudio.com/)

@@ -35,16 +35,17 @@ add_compile_options(
     "$<$<CXX_COMPILER_ID:GNU>:-Wall;-Wextra;-Wpedantic>"
 )
 
-enable_testing()
+include("${CMAKE_SOURCE_DIR}/CMake/clang-format.cmake")
 
 if(NOT REPORTS_DIRECTORY)
     message(FATAL_ERROR "REPORTS_DIRECTORY is not set. Use a configure preset or pass -DREPORTS_DIRECTORY=<path>.")
 endif()
 file(MAKE_DIRECTORY "${REPORTS_DIRECTORY}")
 
+enable_testing()
+
 add_subdirectory("ImmutableForest")
 add_subdirectory("ImmutableForest.Tests")
 add_subdirectory("ImmutableForest.Benchmarks")
 
-include("ClangFormat.cmake")
 add_dependencies("ImmutableForest" "clang-format")

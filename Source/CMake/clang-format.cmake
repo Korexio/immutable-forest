@@ -1,5 +1,6 @@
 find_program("CLANG_FORMAT" "clang-format"
     HINTS "C:/Program Files/Microsoft Visual Studio/18/Professional/VC/Tools/Llvm/x64/bin"
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/Llvm/x64/bin"
     REQUIRED)
 message(STATUS "Using '${CLANG_FORMAT}'.")
 
