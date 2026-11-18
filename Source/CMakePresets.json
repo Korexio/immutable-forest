@@ -1,0 +1,370 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/../Artifacts/${presetName}",
+            "cacheVariables": {
+                "CMAKE_COMPILE_WARNING_AS_ERROR": true,
+                "REPORTS_DIRECTORY": "${sourceDir}/../Artifacts/${presetName}/Reports"
+            }
+        },
+        {
+            "name": "os-windows",
+            "hidden": true,
+            "inherits": "base",
+            "condition": {
+                "lhs": "${hostSystemName}",
+                "type": "equals",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "os-linux",
+            "hidden": true,
+            "inherits": "base",
+            "condition": {
+                "lhs": "${hostSystemName}",
+                "type": "equals",
+                "rhs": "Linux"
+            },
+            "architecture": {
+                "strategy": "external"
+            }
+        },
+        {
+            "name": "architecture-x86-64",
+            "hidden": true,
+            "architecture": {
+                "value": "x64",
+                "strategy": "set"
+            }
+        },
+        {
+            "name": "configuration-debug",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CONFIGURATION_TYPES": "Debug"
+            }
+        },
+        {
+            "name": "configuration-release",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CONFIGURATION_TYPES": "Release"
+            }
+        },
+        {
+            "name": "windows-x86-64-debug",
+            "inherits": [
+                "os-windows",
+                "architecture-x86-64",
+                "configuration-debug"
+            ]
+        },
+        {
+            "name": "windows-x86-64-release",
+            "inherits": [
+                "os-windows",
+                "architecture-x86-64",
+                "configuration-release"
+            ]
+        },
+        {
+            "name": "linux-x86-64-debug",
+            "inherits": [
+                "os-linux",
+                "architecture-x86-64",
+                "configuration-debug"
+            ],
+            "cacheVariables": {
+                "ENABLE_COVERAGE": true
+            }
+        },
+        {
+            "name": "linux-x86-64-release",
+            "inherits": [
+                "os-linux",
+                "architecture-x86-64",
+                "configuration-release"
+            ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "os-windows",
+            "hidden": true,
+            "condition": {
+                "lhs": "${hostSystemName}",
+                "type": "equals",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "os-linux",
+            "hidden": true,
+            "condition": {
+                "lhs": "${hostSystemName}",
+                "type": "equals",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "configuration-debug",
+            "hidden": true,
+            "configuration": "Debug"
+        },
+        {
+            "name": "configuration-release",
+            "hidden": true,
+            "configuration": "Release"
+        },
+        {
+            "name": "windows-x86-64-debug",
+            "inherits": [
+                "os-windows",
+                "configuration-debug"
+            ],
+            "configurePreset": "windows-x86-64-debug"
+        },
+        {
+            "name": "windows-x86-64-release",
+            "inherits": [
+                "os-windows",
+                "configuration-release"
+            ],
+            "configurePreset": "windows-x86-64-release"
+        },
+        {
+            "name": "linux-x86-64-debug",
+            "inherits": [
+                "os-linux",
+                "configuration-debug"
+            ],
+            "configurePreset": "linux-x86-64-debug"
+        },
+        {
+            "name": "linux-x86-64-release",
+            "inherits": [
+                "os-linux",
+                "configuration-release"
+            ],
+            "configurePreset": "linux-x86-64-release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "os-windows",
+            "hidden": true,
+            "condition": {
+                "lhs": "${hostSystemName}",
+                "type": "equals",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "os-linux",
+            "hidden": true,
+            "condition": {
+                "lhs": "${hostSystemName}",
+                "type": "equals",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "configuration-debug",
+            "hidden": true,
+            "configuration": "Debug"
+        },
+        {
+            "name": "configuration-release",
+            "hidden": true,
+            "configuration": "Release"
+        },
+        {
+            "name": "run-tests",
+            "hidden": true,
+            "filter": {
+                "include": {
+                    "label": "^Test$"
+                }
+            },
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "run-benchmarks",
+            "hidden": true,
+            "filter": {
+                "include": {
+                    "label": "^Benchmark$"
+                }
+            },
+            "output": {
+                "verbosity": "verbose"
+            }
+        },
+        {
+            "name": "windows-x86-64-debug-tests",
+            "inherits": [
+                "os-windows",
+                "configuration-debug",
+                "run-tests"
+            ],
+            "configurePreset": "windows-x86-64-debug"
+        },
+        {
+            "name": "windows-x86-64-debug-benchmarks",
+            "inherits": [
+                "os-windows",
+                "configuration-debug",
+                "run-benchmarks"
+            ],
+            "configurePreset": "windows-x86-64-debug"
+        },
+        {
+            "name": "windows-x86-64-release-tests",
+            "inherits": [
+                "os-windows",
+                "configuration-release",
+                "run-tests"
+            ],
+            "configurePreset": "windows-x86-64-release"
+        },
+        {
+            "name": "windows-x86-64-release-benchmarks",
+            "inherits": [
+                "os-windows",
+                "configuration-release",
+                "run-benchmarks"
+            ],
+            "configurePreset": "windows-x86-64-release"
+        },
+        {
+            "name": "linux-x86-64-debug-tests",
+            "inherits": [
+                "os-linux",
+                "configuration-debug",
+                "run-tests"
+            ],
+            "configurePreset": "linux-x86-64-debug"
+        },
+        {
+            "name": "linux-x86-64-debug-benchmarks",
+            "inherits": [
+                "os-linux",
+                "configuration-debug",
+                "run-benchmarks"
+            ],
+            "configurePreset": "linux-x86-64-debug"
+        },
+        {
+            "name": "linux-x86-64-release-tests",
+            "inherits": [
+                "os-linux",
+                "configuration-release",
+                "run-tests"
+            ],
+            "configurePreset": "linux-x86-64-release"
+        },
+        {
+            "name": "linux-x86-64-release-benchmarks",
+            "inherits": [
+                "os-linux",
+                "configuration-release",
+                "run-benchmarks"
+            ],
+            "configurePreset": "linux-x86-64-release"
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "windows-x86-64-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "windows-x86-64-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "windows-x86-64-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "windows-x86-64-debug-tests"
+                },
+                {
+                    "type": "test",
+                    "name": "windows-x86-64-debug-benchmarks"
+                }
+            ]
+        },
+        {
+            "name": "windows-x86-64-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "windows-x86-64-release"
+                },
+                {
+                    "type": "build",
+                    "name": "windows-x86-64-release"
+                },
+                {
+                    "type": "test",
+                    "name": "windows-x86-64-release-tests"
+                },
+                {
+                    "type": "test",
+                    "name": "windows-x86-64-release-benchmarks"
+                }
+            ]
+        },
+        {
+            "name": "linux-x86-64-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x86-64-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x86-64-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "linux-x86-64-debug-tests"
+                },
+                {
+                    "type": "test",
+                    "name": "linux-x86-64-debug-benchmarks"
+                }
+            ]
+        },
+        {
+            "name": "linux-x86-64-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x86-64-release"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x86-64-release"
+                },
+                {
+                    "type": "test",
+                    "name": "linux-x86-64-release-tests"
+                },
+                {
+                    "type": "test",
+                    "name": "linux-x86-64-release-benchmarks"
+                }
+            ]
+        }
+    ]
+}

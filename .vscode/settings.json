@@ -1,0 +1,7 @@
+{
+    "editor.formatOnSave": true,
+    "files.insertFinalNewline": true,
+    "cmake.sourceDirectory": "${workspaceFolder}/Source",
+    "C_Cpp.formatting": "clangFormat",
+    "C_Cpp.clang_format_style": "file",
+}

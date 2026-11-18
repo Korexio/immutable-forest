@@ -1,0 +1,50 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "preset",
+            "type": "pickString",
+            "description": "Preset",
+            "options": [
+                "windows-x86-64-debug",
+                "windows-x86-64-release",
+                "linux-x86-64-debug",
+                "linux-x86-64-release"
+            ],
+            "default": "windows-x86-64-debug"
+        }
+    ],
+    "tasks": [
+        {
+            "type": "process",
+            "label": "Configure: ImmutableForest",
+            "command": "cmake",
+            "args": [
+                "--preset",
+                "${input:preset}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/Source"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "process",
+            "label": "Build: ImmutableForest",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "--preset",
+                "${input:preset}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/Source"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
